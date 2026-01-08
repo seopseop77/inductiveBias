@@ -3,8 +3,8 @@ from pathlib import Path
 from PIL import Image
 import csv
 
-N = 100
-NUM_SAMPLES = 10000
+N = 98 # 14 * 7 
+NUM_SAMPLES = 1000
 POLY_RANGE = [4, 10] # 몇각형인지
 CENTER_MARGIN, CENTER_STD = 0.2, 0.3
 
@@ -81,8 +81,8 @@ for i in range(1, NUM_SAMPLES + 1):
   img.save(IMG_DIR / filename)
   labels.append((filename, diameter))
 
-  if i / NUM_SAxMPLES
-  print(f"sample {i} / {NUM_SAMPLES} Done!")
+  if i / NUM_SAMPLES:
+    print(f"sample {i} / {NUM_SAMPLES} Done!")
 
 f = open(OUT_DIR / "labels.csv", "w", newline="")
 writer = csv.writer(f)
