@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import cv2
 import pandas as pd
 from torchvision import transforms
 import timm
@@ -34,7 +33,7 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
-# 4. 데이터 시각화 실행 (데이터셋의 첫 번째 이미지 테스트)
+# 4. 데이터 시각화 실행 
 try:
     df = pd.read_csv(LABEL_FILE)
     sample_row = df.iloc[:5]
