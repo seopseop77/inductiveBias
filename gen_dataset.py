@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image
 import csv
 
-N = 98 # 14 * 7 
+N = 112 # 14 * 8
 NUM_SAMPLES = 1000
 POLY_RANGE = [4, 10] # 몇각형인지
 CENTER_MARGIN, CENTER_STD = 0.2, 0.3
