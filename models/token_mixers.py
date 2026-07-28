@@ -155,15 +155,6 @@ class MLPMixer(nn.Module):
             x = x.transpose(-2, -1).reshape(B, C, H, W)
         return x
 
-# poolFormer Implementation
-class PoolFormer(nn.Module):
-    def __init__(self, dim, pool_size=3, stride=1):
-        super().__init__()
-        self.pool = nn.AvgPool2d(pool_size, stride=stride, padding=pool_size//2, count_include_pad=False)
-    
-    def forward(self, x):
-        return self.pool(x) - x
-
 class ConvFormer(nn.Module):
     """
     Grouped-convolution token mixer (the "Convformer" model of the report, Section 3.2.4).

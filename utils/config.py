@@ -91,19 +91,18 @@ def get_parser():
     parser.add_argument("--expansion_factor", type=int, default=2, help="hidden dimension expansion rate")
     parser.add_argument("--mixer_drop", type=float, default=0.5, help="mlp mixer layer drop rate")
 
-    # PoolFormer
-    parser.add_argument("--pool_size", type=int, default=3, help="pooling size for PoolFormer")
-    parser.add_argument("--stride", type=int, default=1, help="stride for PoolFormer")
-
     # ConvFormer
+    parser.add_argument("--stride", type=int, default=1, help="stride for the ConvFormer convolution")
     parser.add_argument("--kernel_size", type=int, default=3, help="kernel size for ConvFormer depthwise convolution")
     parser.add_argument("--conv_groups", type=int, default=192, help="number of channel groups for ConvFormer grouped convolution")
 
-    # ResNet
-    parser.add_argument("--resnet_block", type=str, default="basic", help="resnet block type")
-    parser.add_argument("--resnet_stem_channels", type=int, default=64, help="stem output channels for ResNet")
-    parser.add_argument("--resnet_base_channels", type=int, default=64, help="base stage width for ResNet")
-    parser.add_argument("--resnet_zero_init_residual", type=lambda x: str(x).lower() in ("true", "1", "yes"), default=False, help="zero-init the last BN in each residual branch")
+    # Archived experiments — not used by the reported runs. These stay registered so the
+    # configs under experimental/config/ still parse; see experimental/README.md.
+    parser.add_argument("--pool_size", type=int, default=3, help="[experimental] pooling size for PoolFormer")
+    parser.add_argument("--resnet_block", type=str, default="basic", help="[experimental] resnet block type")
+    parser.add_argument("--resnet_stem_channels", type=int, default=64, help="[experimental] stem output channels for ResNet")
+    parser.add_argument("--resnet_base_channels", type=int, default=64, help="[experimental] base stage width for ResNet")
+    parser.add_argument("--resnet_zero_init_residual", type=lambda x: str(x).lower() in ("true", "1", "yes"), default=False, help="[experimental] zero-init the last BN in each residual branch")
 
     # Pretrained ViT (Google JAX .npz)
     parser.add_argument("--pretrained_npz", type=str, default=None, help="path to Google JAX .npz checkpoint for pretrained ViT")
