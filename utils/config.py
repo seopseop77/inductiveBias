@@ -108,6 +108,14 @@ def get_parser():
     return parser
 
     
+# Model names that were used while running the experiments, mapped to the names used in
+# the report. Checkpoints saved before the rename carry the old name in their config.yaml,
+# so keep resolving them rather than breaking the analysis pipeline on existing runs.
+_LEGACY_MODEL_ALIASES = {
+    "denseformer": "mlpmixer",
+}
+
+
 def _apply_yaml(args, path):
     """Load a yaml file and apply its values onto args. Raises on unknown keys."""
     assert os.path.exists(path), f"Config not found: {path}"
@@ -151,6 +159,12 @@ def parse_args(argv=None):
     # Re-parse real CLI (or provided argv) last so it has highest priority.
     parser.set_defaults(**vars(defaults))
     args = parser.parse_args(argv)
+
+    if args.model in _LEGACY_MODEL_ALIASES:
+        new_name = _LEGACY_MODEL_ALIASES[args.model]
+        print(f"[config] model '{args.model}' was renamed to '{new_name}'; using '{new_name}'.")
+        args.model = new_name
+
     if args.device_type is None:
         raise ValueError(
             "'device_type' must be set explicitly (YAML: device_type: 0 or CLI: --device_type 1). "

@@ -59,29 +59,26 @@ def setup(args):
         if args.act_layer == 'GELU':
             args.act_layer = nn.GELU
 
+        # Token mixers. The four reported mixers plus the identity (no-mixing) baseline;
+        # see README for the report-name <-> CLI-name mapping.
         if args.model == "identity":
             args.token_mixer = nn.Identity
         elif args.model == "vit":
             args.token_mixer = partial(TM.Attention, head_dim=args.attn_head_dim, qkv_bias=args.attn_qkv_bias,
                                 attn_drop=args.attn_drop, proj_drop=args.attn_proj_drop,)
         elif args.model == "localvit":
-            args.token_mixer = partial(TM.ConvAttention, head_dim=args.attn_head_dim, window_size=args.window_size, 
+            args.token_mixer = partial(TM.ConvAttention, head_dim=args.attn_head_dim, window_size=args.window_size,
                                 qkv_bias=args.attn_qkv_bias, attn_drop=args.attn_drop, proj_drop=args.attn_proj_drop,)
         elif args.model == "mlpmixer":
             args.token_mixer = partial(TM.MLPMixer, img_size=args.img_size, patch_size=args.patch_size,
-                                        expansion_factor=args.expansion_factor, mixer_drop=args.mixer_drop,)                               
-        elif args.model == "poolformer":
-            args.token_mixer = partial(TM.PoolFormer, pool_size=args.pool_size, stride=args.stride)
+                                        expansion_factor=args.expansion_factor, mixer_drop=args.mixer_drop,)
         elif args.model == "convformer":
             args.token_mixer = partial(TM.ConvFormer, kernel_size=args.kernel_size, stride=args.stride, groups=args.conv_groups)
-        elif args.model == "convformer2":
-            args.token_mixer = TM.ConvFormer2
-        elif args.model == "denseformer":
-            args.token_mixer = partial(TM.DenseFormer, img_size=args.img_size, patch_size=args.patch_size,
-                                        expansion_factor=args.expansion_factor, mixer_drop=args.mixer_drop,)    
-        elif args.model == "resmlp":
-            args.token_mixer = partial(TM.ResMLP, img_size=args.img_size, patch_size=args.patch_size,
-                                        expansion_factor=args.expansion_factor)
+        else:
+            raise ValueError(
+                f"Unsupported MetaFormer token mixer: {args.model!r}. "
+                f"Choose one of: identity, vit, localvit, mlpmixer, convformer."
+            )
 
         # Channel Mixers
         if args.channel_mixer == "mlp":
