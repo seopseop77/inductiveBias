@@ -1,3 +1,10 @@
+# Adapted from https://github.com/davda54/sam
+#   Copyright (c) 2020 David Samuel
+#   Licensed under the MIT License
+#
+# Foret et al., "Sharpness-Aware Minimization for Efficiently Improving
+# Generalization", ICLR 2021.
+
 import torch
 
 
