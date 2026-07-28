@@ -73,6 +73,9 @@ def get_parser():
     )
     parser.add_argument("--device_type", type=int, default=None, metavar="N", help="CUDA device index (e.g. 0 or 1). Must be explicitly set via YAML or CLI.")
     parser.add_argument("--no_wandb", action="store_true", help="disable Weights & Biases logging")
+    parser.add_argument("--wandb_entity", type=str, default="snu-inductive-bias",
+                        help="W&B entity (team or user). Set to your own entity, or pass "
+                             "--no_wandb to train without logging.")
     parser.add_argument("--project", type=str, default="exp1", help="W&B project name")
     parser.add_argument("--run_name", type=str, default="XXXXX", help="W&B run name")    
 
